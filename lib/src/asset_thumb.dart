@@ -19,12 +19,16 @@ class AssetThumb extends StatefulWidget {
   /// thumb is loading.
   final Widget spinner;
 
+  /// The thumb should be inscribed into another box.
+  final BoxFit fit;
+
   const AssetThumb({
     Key key,
     @required this.asset,
     @required this.width,
     @required this.height,
     this.quality = 100,
+    this.fit = BoxFit.cover,
     this.spinner = const Center(
       child: SizedBox(
         width: 50,
@@ -46,6 +50,7 @@ class _AssetThumbState extends State<AssetThumb> {
   int get quality => widget.quality;
   Asset get asset => widget.asset;
   Widget get spinner => widget.spinner;
+  BoxFit get fit => widget.fit;
 
   @override
   void initState() {
@@ -87,7 +92,7 @@ class _AssetThumbState extends State<AssetThumb> {
     return Image.memory(
       _thumbData.buffer.asUint8List(),
       key: ValueKey(asset.identifier),
-      fit: BoxFit.cover,
+      fit: fit ?? BoxFit.cover,
       gaplessPlayback: true,
     );
   }
